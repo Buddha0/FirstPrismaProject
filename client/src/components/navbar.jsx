@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function NavBar() {
     return (
         <>
@@ -8,8 +10,8 @@ export default function NavBar() {
                 </div>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1">
-                        <li><a>Register</a></li>
-                        <li><a>Login</a></li>
+                        <Link to  = "/register"><li><a>Register</a></li></Link>
+                       <Link to = "/login"><li><a>Login</a></li></Link> 
                         <li>
                             <details>
                                 <summary>

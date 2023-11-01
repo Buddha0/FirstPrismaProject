@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+ 
 export default function Register() {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({})
     const [loading,setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
@@ -38,6 +41,7 @@ export default function Register() {
         const data = await res.json()
         console.log(data)
         setLoading(false)
+navigate("/login")
 
     }catch(err){
         console.log("Client Register Error",err)
