@@ -1,60 +1,60 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
- 
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Register() {
     const navigate = useNavigate()
     const [formData, setFormData] = useState({})
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
-    useEffect(()=>{
+    useEffect(() => {
 
-        if(errorMsg){
+        if (errorMsg) {
             toast.error(errorMsg);
             setErrorMsg("");
         }
-    },[errorMsg])
+    }, [errorMsg])
 
     function handleChange(e) {
         setFormData({ ...formData, [e.target.id]: e.target.value })
     }
 
-   async function handleSubmit(e){
-    try{
-        setLoading(true)
-        e.preventDefault()
-        const res = await fetch("http://localhost:4000/signup",
-        {
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-            },
-            body:JSON.stringify(formData)
-        })
+    async function handleSubmit(e) {
+        try {
+            setLoading(true)
+            e.preventDefault()
+            const res = await fetch("http://localhost:4000/signup",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData)
+                })
 
-        if (res.status === 400) {
-            const errorData = await res.json();
-           setErrorMsg(errorData.error)
+            if (res.status === 400) {
+                const errorData = await res.json();
+                setErrorMsg(errorData.error)
+            }
+
+            const data = await res.json()
+            console.log(data)
+            setLoading(false)
+            alert("Registered Sucessfully")
+
+        } catch (err) {
+            console.log("Client Register Error", err)
+        }
+        finally {
+            setLoading(false)
         }
 
-        const data = await res.json()
-        console.log(data)
-        setLoading(false)
-navigate("/login")
-
-    }catch(err){
-        console.log("Client Register Error",err)
-    }
-    finally{
-        setLoading(false)
-    }
-        
     }
     return (
         <>
 
-<ToastContainer />
+            <ToastContainer />
             <div className="w-full flex  max-w-[1100px] m-auto  rounded-2xl p-2">
                 <img src="https://animelosangeles.org/wp-content/uploads/2022/07/industryregistration.png " className="w-[40%] object-contain "></img>
                 <form className="  w-full h-full p-10 ml-10" onSubmit={handleSubmit} >
@@ -97,7 +97,7 @@ navigate("/login")
 
                         <p>By continuing you agree to <span className="text-[#434773] font-bold">Terms and Conditions</span > and <span className="text-[#434773] font-bold"> Privacy and Policy</span></p>
 
-                        <button disabled = {loading} className="p-3 rounded-md w-full bg-[#434773] mt-5 text-white hover:bg-[#4b5296] transition-all">{loading?"loading":"Create Account"}</button>
+                        <button disabled={loading} className="p-3 rounded-md w-full bg-[#434773] mt-5 text-white hover:bg-[#4b5296] transition-all">{loading ? "loading" : "Create Account"}</button>
                         <p className="mt-3 text-center">Already have an Account? Login now</p>
 
                         {errorMsg}
